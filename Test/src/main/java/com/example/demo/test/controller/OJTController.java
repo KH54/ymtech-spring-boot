@@ -144,12 +144,15 @@ public class OJTController {
     public ResponseEntity<String> deleteUser(@PathVariable("user-id") String id) {
         StringBuilder result = new StringBuilder();
         
+        if(userMap.containsKey(id)) {
         userMap.remove(id);
         
         result.append(id);
-        result.append(" : Delete Complete");
+        result.append("is delete");
         
         return new ResponseEntity<String>(result.toString(), HttpStatus.OK);
+        }
+        return null;
     }
 
 }
