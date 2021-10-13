@@ -1,8 +1,5 @@
 package com.example.demo.test.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 /**
  * @Entity JPA가 관리하는 Class임을 명시 매핑할 테이블네임을 속성에 입력
  * @Id 기본키로 설정하는 어노테이션
@@ -11,10 +8,8 @@ import javax.persistence.Id;
  * @since 2021. 10. 12. 오후 1:44:24
  *
  */
-@Entity(name = "user")
 public class User {
-    // 유저 ID -- PK
-    @Id
+    // 유저 ID -- PK   
     private String userId;
     // 유저 PW
     private String userPwd;
@@ -96,6 +91,25 @@ public class User {
      */
     public void setUserNick(String userNick) {
         this.userNick = userNick;
+    }
+
+    /**
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 10. 13. 오후 1:48:59
+     * @see
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[userId=");
+        builder.append(userId);
+        builder.append(", userPwd=");
+        builder.append(userPwd);
+        builder.append(", userNick=");
+        builder.append(userNick);
+        builder.append("]");
+        return builder.toString();
     }
 
 }
