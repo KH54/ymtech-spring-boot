@@ -1,11 +1,11 @@
 package com.example.demo.test.model;
 
 /**
- * @Entity JPA가 관리하는 Class임을 명시 매핑할 테이블네임을 속성에 입력
- * @Id 기본키로 설정하는 어노테이션
  * 
- * @author "KyungHun Park"
- * @since 2021. 10. 12. 오후 1:44:24
+ * @description : User 객체의 생성자 
+ *
+ * @author : Kyunghun Park 
+ * @since : 2021. 10. 18. 오전 11:05:39
  *
  */
 public class User {
@@ -20,7 +20,7 @@ public class User {
 
     }
 
-    // 생성자 오버로딩
+    // 생성자 오버로딩 
     public User(String userId, String userPwd, String userNick) {
         this.userId = userId;
         this.userPwd = userPwd;
@@ -97,7 +97,6 @@ public class User {
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 13. 오후 1:48:59
-     * @see
      */
     @Override
     public String toString() {
