@@ -1,17 +1,27 @@
 package com.example.demo.test.controller;
 
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.example.demo.test.model.User;
-import com.example.demo.test.service.impl.UserService;
 
+import com.example.demo.test.model.User;
+import com.example.demo.test.service.user.UserServiceImpl;
+import com.example.demo.test.valid.RequestValidation;
+
+//TODO 컨트롤러에서 데이터 검증
+//성적 불러오는 메소드 = 정보 + 성적 점수 같이 나오는 API
 /**
  * 유저의 CRUD 컨트롤러
  *
@@ -22,7 +32,9 @@ import com.example.demo.test.service.impl.UserService;
 @RestController
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
+    @Autowired
+    private RequestValidation requestValidation;
 
     /**
      * 모든 user를 GET하는 메소드
@@ -33,8 +45,8 @@ public class UserController {
      * @return 생성한 User를 JSON 형식으로 출력, 상태 코드 출력
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<Object> getUsers(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "gender", required = false) String gender, @RequestParam(value = "age", defaultValue = "0", required = false) int age) {
+        return new ResponseEntity<>(userService.getUsers(name, gender, age), HttpStatus.OK);
 
     }
 
@@ -48,12 +60,14 @@ public class UserController {
      * @return 조회할 User를 JSON 형식으로 출력, 상태 코드 출력
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getUser(@PathVariable("user-id") String id) {
+    public ResponseEntity<Object> getUser(@NotBlank @PathVariable("user-id") String id) {
+
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+
     }
 
     /**
-     * User 객체의 정보(id,pwd,nick)를 입력받아 POST하는 메소드
+     * User 객체의 정보(id,pwd,name)를 입력받아 POST하는 메소드
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 13. 오후 4:53:20
@@ -62,12 +76,15 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    public ResponseEntity<Object> createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+           return requestValidation.validation(bindingResult);
+        }
+            return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     /**
-     * 일치하는 id의 pwd, nick을 변경하는 메소드
+     * 일치하는 id의 pwd, name을 변경하는 메소드
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 13. 오후 4:54:23
@@ -77,9 +94,8 @@ public class UserController {
      * @return 갱신할 User를 JSON 형식으로 출력, 상태 코드 출력
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.PATCH)
-    public ResponseEntity<Object> updateUser(@PathVariable("user-id") String id, @RequestBody User user) {
+    public ResponseEntity<Object> updateUser(@PathVariable("user-id") @NotNull String id, @RequestBody User user) {
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
-
     }
 
     /**
@@ -92,26 +108,8 @@ public class UserController {
      * @return 삭제할 User를 JSON 형식으로 출력, 상태 코드 출력
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteUser(@PathVariable("user-id") String id) {
+    public ResponseEntity<Object> deleteUser(@Valid @PathVariable("user-id") String id) {
 
         return new ResponseEntity<Object>(userService.deleteUser(id), HttpStatus.OK);
     }
-
-    /**
-     * 파라미터로 들어온 정보를 포함하는 User 객체를 출력하는 메소드
-     * 
-     * @author "KyungHun Park"
-     * @since 2021. 10. 18.
-     *
-     * @param pwd  : 조회할 pwd
-     * @param nick : 조회할 nick
-     * @return 조회할 User를 JSON 형식으로 출력, 상태 코드 출력
-     */
-    @RequestMapping(value = "/users/element", method = RequestMethod.GET)
-    public ResponseEntity<Object> getElementUser(@RequestParam(value = "pwd", required = false) String pwd, @RequestParam(value = "nick", required = false) String nick) {
-
-        return new ResponseEntity<Object>(userService.getElementUser(pwd, nick), HttpStatus.OK);
-
-    }
-
 }
