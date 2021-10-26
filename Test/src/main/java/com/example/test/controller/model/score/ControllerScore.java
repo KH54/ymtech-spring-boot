@@ -1,10 +1,12 @@
-package com.example.test.model;
+package com.example.test.controller.model.score;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
+
+import com.example.test.controller.model.user.ControllerUser;
+import com.example.test.model.Score;
 
 /**
  * User와 Score의 정보를 같이 출력해주기 위한 Score 객체 생성 메소드
@@ -18,61 +20,61 @@ import org.springframework.validation.annotation.Validated;
  *
  */
 @Validated
-public class Score extends User{
-    // 유저 ID -- PK
+public class ControllerScore extends ControllerUser {
+    // 유저 UUID -- PK
+
+    // 유저 ID - FK
     @NotBlank(message = "plz correct id(Nonblank, NonEmpty")
     private String userId;
+
     // 유저 국어, 수학, 영어, 과학, 평균 점수 양수와 최대 3의 길이까지가능(100점)
-    @Positive(message = "plz insert positive score")
-    @Size(max = 3, message = "plz correct score")
-    private int korean= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int math= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int english= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int science= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int average= -1;
+    @Size(min = 1, message = "plz correct score")
+    private int korean = -1;
+    @Size(min = 1, message = "plz correct score")
+    private int math = -1;
+    @Size(min = 1, message = "plz correct score")
+    private int english = -1;
+    @Size(min = 1, message = "plz correct score")
+    private int science = -1;
+    @Size(min = 1, message = "plz correct score")
+    private int average = -1;
 
     // 기본 생성자
-    public Score() {
+    public ControllerScore() {
 
     }
-
-    // 생성자 오버로딩
-    public Score(String id, int korean, int math, int english, int science, int average) {
-        this.userId = id;
-        this.korean = korean;
-        this.math = math;
-        this.english = english;
-        this.science = science;
-        this.average = average;
+    
+    public ControllerScore(Score score) {
+        this.setId(score.getId());
+        this.setPwd(score.getPwd());
+        this.setName(score.getName());
+        this.setGender(score.getGender());
+        this.setAge(score.getAge());
+        this.userId = score.getUserId();    
+        this.korean = score.getKorean();
+        this.math = score.getMath();
+        this.english = score.getEnglish();
+        this.science = score.getScience();
+        this.average = score.getAverage();
     }
 
-    
-    
     /**
-     * Score.java
+     * 
      *
      * @author "KyungHun Park"
-     * @since 2021. 10. 26. 오후 9:02:06
+     * @since 2021. 10. 19. 오후 4:16:12
      *
-     * @return 
+     * @return
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * id 을(를) 지정합니다.
+     * 
      *
      * @author "KyungHun Park"
-     * @since 2021. 10. 26. 오후 9:02:06
+     * @since 2021. 10. 19. 오후 4:16:12
      *
      * @param id
      */

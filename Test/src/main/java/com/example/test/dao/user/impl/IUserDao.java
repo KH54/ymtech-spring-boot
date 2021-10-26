@@ -2,6 +2,10 @@ package com.example.test.dao.user.impl;
 
 import java.util.List;
 
+import com.example.test.controller.model.score.req.CreateScoreReq;
+import com.example.test.controller.model.user.req.CreateUserReq;
+import com.example.test.controller.model.user.req.ReadUserReq;
+import com.example.test.controller.model.user.req.UpdateUserReq;
 import com.example.test.model.User;
 
 /**
@@ -14,6 +18,8 @@ import com.example.test.model.User;
  *
  */
 public interface IUserDao {
+    
+    public int createScore(CreateScoreReq req);
     /**
      * 모든 유저의 정보(성적 미포함)를 DB에서 조회 및 특정 조건을 만족하는 유저를 조회하는 메소드
      *
@@ -29,7 +35,7 @@ public interface IUserDao {
      * @modified 2021. 10. 24. 오후 9:31:43 || Kyunghun Park || 최초 생성
      *
      */
-    public List<User> getUsers(String id, String name, String gender, int age);
+    public List<User> getUsers(ReadUserReq req);
 
     /**
      * 특정 유저의 정보(성적 미포함)을 조회하기 위한 메소드
@@ -43,7 +49,7 @@ public interface IUserDao {
      * @modified 2021. 10. 24. 오후 9:33:16 || Kyunghun Park || 최초 생성
      *
      */
-    public User getUser(String id);
+    public User getUser(ReadUserReq req);
 
     /**
      * 새로운 유저를 DB에 저장하는 메소드
@@ -57,7 +63,7 @@ public interface IUserDao {
      * @modified 2021. 10. 24. 오후 9:33:43 || Kyunghun Park || 최초 생성
      *
      */
-    public int createUser(User user);
+    public int createUser(CreateUserReq req);
 
     /**
      * 특정 유저 정보를 삭제하기 위한 메소드
@@ -85,5 +91,5 @@ public interface IUserDao {
      * @modified 2021. 10. 24. 오후 9:36:12 || Kyunghun Park || 최초 생성
      *
      */
-    public int updateUser(User user);
+    public int updateUser(UpdateUserReq req);
 }

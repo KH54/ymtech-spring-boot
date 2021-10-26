@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.test.model.Score;
 import com.example.test.model.User;
 import com.example.test.service.user.UserServiceImpl;
-import com.example.test.valid.RequestValidation;
 
 /**
  * 유저의 CRUD 컨트롤러
@@ -30,8 +29,6 @@ import com.example.test.valid.RequestValidation;
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
-    @Autowired
-    private RequestValidation requestValidation;
 
     /**
      * 모든 user를 GET하는 메소드 or 특정 조건을 만족하는 user를 GET하는 메소드
@@ -48,13 +45,10 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ResponseEntity<Object> getUsers(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam(value = "name", required = false) String name, 
-            @RequestParam(value = "gender", required = false) String gender, 
+    public ResponseEntity<Object> getUsers(@RequestParam(value = "id", required = false) String id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "gender", required = false) String gender,
             @RequestParam(value = "age", defaultValue = "0", required = false) int age) {
-        return new ResponseEntity<>(userService.getUsers(id,name, gender, age), HttpStatus.OK);
-
+        
+        return new ResponseEntity<>(userService.getUsers(id, name, gender, age), HttpStatus.OK);
     }
 
     /**
@@ -67,13 +61,13 @@ public class UserController {
      * @return 조회할 User를 JSON 형식으로 출력, 상태 코드 출력
      *
      * @modified 2021. 10. 13. Kyunghun Park 최초 생성
+     * 
      *
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getUser(@NotBlank @PathVariable("user-id") String id) {
-
+        
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
-
     }
 
     /**
@@ -89,11 +83,8 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<Object> createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return requestValidation.validation(bindingResult);
-        }
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    public ResponseEntity<Object> createUser(@RequestBody Score score) {
+        return new ResponseEntity<>(userService.createScore(score), HttpStatus.CREATED);
     }
 
     /**

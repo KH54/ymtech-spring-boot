@@ -69,21 +69,4 @@ public class ScoreController {
     public ResponseEntity<Object> updateScore(@PathVariable("user-id") String id, @RequestBody Score score) {
         return new ResponseEntity<>(scoreService.updateScore(id, score), HttpStatus.OK);
     }
-
-    /**
-     * 특정 User의 Score를 DELETE하는 컨트롤러 메소드
-     *
-     * @author "KyungHun Park"
-     * @since 2021. 10. 24. 오후 7:16:35
-     * 
-     * @param id : DELETE할 Score의 id
-     * @return : DELETE한 정보를 JSON 형식으로 출력, 상태 코드 출력
-     *
-     * @modified 2021. 10. 24. 오후 7:16:35 || Kyunghun Park || 최초 생성
-     *
-     */
-    @RequestMapping(value = "/users/score/{user-id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteScore(@PathVariable("user-id") String id) {
-        return new ResponseEntity<>(scoreService.deleteScore(id), HttpStatus.OK);
-    }
 }

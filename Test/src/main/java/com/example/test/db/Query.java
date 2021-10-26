@@ -24,5 +24,6 @@ public class Query {
     public static final String SQL_SCORE_UPDATE = "UPDATE user_score SET korean = ?, math = ?, english = ?, science = ?, average = ? WHERE user_id = ?";
     public static final String SQL_SCORE_DELETE = "DELETE FROM user_score WHERE user_id = ?";
     public static final String SQL_SCORE_SELECT = "SELECT * FROM user JOIN user_score ON user.id = user_score.user_id WHERE user.id= ?";
+    public static final String SQL_SCORE_INSERT = "INSERT INTO user_score(uuid, id, korean, math, english, science, average) values(?,?,?,?,?,?,?)";
     //SELECT * FROM user JOIN user_score ON user.id = user_score.user_id WHERE user.id="119";
 }

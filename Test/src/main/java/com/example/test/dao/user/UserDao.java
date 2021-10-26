@@ -9,6 +9,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.test.controller.model.score.req.CreateScoreReq;
+import com.example.test.controller.model.user.req.CreateUserReq;
+import com.example.test.controller.model.user.req.ReadUserReq;
+import com.example.test.controller.model.user.req.UpdateUserReq;
 import com.example.test.dao.user.impl.IUserDao;
 import com.example.test.db.Query;
 import com.example.test.model.User;
@@ -25,15 +29,30 @@ import com.example.test.model.User;
 @Repository
 public class UserDao implements IUserDao {
 
-    //의존성 주입
+    // 의존성 주입
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public int createScore(CreateScoreReq req) {
+        return jdbcTemplate.update(Query.SQL_SCORE_INSERT, req.getUuid(), req.getId(), req.getKorean(), req.getMath(), req.getEnglish(), req.getScience(), req.getAverage());
+
+    }
+
     /**
-     * @see com.example.test.dao.user.impl.IUserDao#getUsers(String, String, String, int)
+     * @see com.example.test.dao.user.impl.IUserDao#createUser(User)
      */
     @Override
-    public List<User> getUsers(String id, String name, String gender, int age) {
+    public int createUser(CreateUserReq req) {
+        // 생성할 User 객체의 정보로 Query 실행
+        return jdbcTemplate.update(Query.SQL_USER_INSERT, req.getControlUser().getId(), req.getControlUser().getPwd(), req.getControlUser().getName(), req.getControlUser().getGender(), req.getControlUser().getAge());
+    }
+
+    /**
+     * @see com.example.test.dao.user.impl.IUserDao#getUsers(String, String, String,
+     *      int)
+     */
+    @Override
+    public List<User> getUsers(ReadUserReq req) {
         // 입력 받은 parameter를 저장하기 위한 List
         List<Object> params = new ArrayList<>();
 
@@ -44,25 +63,25 @@ public class UserDao implements IUserDao {
         String query = Query.SQL_USER_SELECT_ELE;
 
         // parameter의 값이 존재하는 경우 쿼리문에 추가
-        if (id != null) {
-            params.add(id);
+        if (req.getId() != null) {
+            params.add(req.getId());
             sb.append("AND id=? ");
         }
-        if (name != null) {
-            params.add(name);
+        if (req.getName() != null) {
+            params.add(req.getName());
             sb.append("AND name=? ");
         }
 
-        if (gender != null) {
-            params.add(gender);
+        if (req.getGender() != null) {
+            params.add(req.getGender());
             sb.append("AND gender=? ");
         }
-        
-        if (age != 0) {
-            params.add(age);
+
+        if (req.getAge() != 0) {
+            params.add(req.getAge());
             sb.append("AND age=?");
         }
-        
+
         // Query 수정
         query = sb != null ? query.replace("{where_clause}", sb.toString()) : query;
         // 쿼리를 실행하고 RowMapper를 이용해서 ResultSet 결과를 User 객체로 변환
@@ -73,25 +92,16 @@ public class UserDao implements IUserDao {
      * @see com.example.test.dao.user.impl.IUserDao#getUser(String)
      */
     @Override
-    public User getUser(String id) {
+    public User getUser(ReadUserReq req) {
         try {
             // 쿼리를 실행하고 RowMapper를 이용해서 ResultSet 결과를 User 객체로 변환
-            User user = jdbcTemplate.queryForObject(Query.SQL_USER_SELECT_ID, BeanPropertyRowMapper.newInstance(User.class), id);
+            User user = jdbcTemplate.queryForObject(Query.SQL_USER_SELECT_ID, BeanPropertyRowMapper.newInstance(User.class), req.getId());
 
             return user;
         } catch (IncorrectResultSizeDataAccessException e) {
             // 결과 값이 0개이거나 2개 이상인 경우
         }
         return null;
-    }
-
-    /**
-     * @see com.example.test.dao.user.impl.IUserDao#createUser(User)
-     */
-    @Override
-    public int createUser(User user) {
-        // 생성할 User 객체의 정보로 Query 실행
-        return jdbcTemplate.update(Query.SQL_USER_INSERT, user.getId(), user.getPwd(), user.getName(), user.getGender(), user.getAge());
     }
 
     /**
@@ -107,9 +117,9 @@ public class UserDao implements IUserDao {
      * @see com.example.test.dao.user.impl.IUserDao#updateUser(User)
      */
     @Override
-    public int updateUser(User user) {
+    public int updateUser(UpdateUserReq req) {
         // 업데이트할 User 객체의 정보로 Query 실행
-        return jdbcTemplate.update(Query.SQL_USER_UPDATE, user.getPwd(), user.getName(), user.getGender(), user.getAge(), user.getId());
+        return jdbcTemplate.update(Query.SQL_USER_UPDATE, req.getUpdate().getPwd(), req.getUpdate().getName(), req.getUpdate().getGender(), req.getUpdate().getAge(), req.getUpdate().getId());
     }
 
 //    

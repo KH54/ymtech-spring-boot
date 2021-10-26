@@ -2,6 +2,8 @@ package com.example.test.dao.score.impl;
 
 import java.util.List;
 
+import com.example.test.controller.model.score.req.ReadScoreReq;
+import com.example.test.controller.model.score.req.UpdateScoreReq;
 import com.example.test.model.Score;
 
 /**
@@ -40,7 +42,7 @@ public interface IScoreDao {
      * @modified 2021. 10. 24. 오후 9:27:47 || Kyunghun Park || 최초 생성
      *
      */
-    public Score getScore(String id);
+    public Score getScore(ReadScoreReq req);
 
     /**
      * 특정 유저의 성적 정보를 DB에서 수정하는 메소드
@@ -54,7 +56,7 @@ public interface IScoreDao {
      * @modified 2021. 10. 24. 오후 9:29:06 || Kyunghun Park || 최초 생성
      *
      */
-    public Integer updateScore(Score score);
+    public Integer updateScore(UpdateScoreReq req);
 
     /**
      * 특정 유저의 성적 정보를 DB에서 삭제하는 메소드

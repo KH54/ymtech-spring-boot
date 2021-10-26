@@ -1,4 +1,4 @@
-package com.example.test.controller.model.user;
+package com.example.test.controller.model.user.res;
 
 import com.example.test.model.User;
 
@@ -11,12 +11,12 @@ import com.example.test.model.User;
  * @modified 2021. 10. 24. 오후 9:55:28 || Kyunghun Park || 최초 생성
  *
  */
-public class ElementRes {
+public class ElementUserRes {
 
     private User element;
 
     // 기본 생성자
-    public ElementRes() {
+    public ElementUserRes() {
 
     }
 
