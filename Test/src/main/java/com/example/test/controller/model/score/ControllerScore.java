@@ -1,5 +1,7 @@
 package com.example.test.controller.model.score;
 
+import java.util.UUID;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,7 +24,7 @@ import com.example.test.model.Score;
 @Validated
 public class ControllerScore extends ControllerUser {
     // 유저 UUID -- PK
-
+    private String uuid;
     // 유저 ID - FK
     @NotBlank(message = "plz correct id(Nonblank, NonEmpty")
     private String userId;
@@ -43,19 +45,45 @@ public class ControllerScore extends ControllerUser {
     public ControllerScore() {
 
     }
-    
+
     public ControllerScore(Score score) {
+        this.setUuid(score.getUuid());
         this.setId(score.getId());
         this.setPwd(score.getPwd());
         this.setName(score.getName());
         this.setGender(score.getGender());
         this.setAge(score.getAge());
-        this.userId = score.getUserId();    
+        this.uuid = UUID.randomUUID().toString();
+        this.userId = score.getUserId();
         this.korean = score.getKorean();
         this.math = score.getMath();
         this.english = score.getEnglish();
         this.science = score.getScience();
         this.average = score.getAverage();
+    }
+
+    /**
+     * ControllerScore.java
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 10. 26. 오후 10:24:57
+     *
+     * @return 
+     */
+    public String getUuid() {
+        return uuid;
+    }
+
+    /**
+     * uuid 을(를) 지정합니다.
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 10. 26. 오후 10:24:57
+     *
+     * @param uuid
+     */
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     /**

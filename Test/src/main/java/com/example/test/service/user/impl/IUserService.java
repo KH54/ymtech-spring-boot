@@ -20,6 +20,18 @@ import com.example.test.model.User;
  */
 public interface IUserService {
     
+    /**
+     * 유저 및 성적 생성 메소드
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 11. 1. 오후 1:31:55
+     * 
+     * @param score : 유저 정보와 성적 정보를 갖춘 객체
+     * @return : 생성된 객체의 정보
+     *
+     * @modified 2021. 11. 1. 오후 1:31:55 || Kyunghun Park || 최초 생성
+     *
+     */
     public CreateScoreRes createScore(Score score);
 
     /**

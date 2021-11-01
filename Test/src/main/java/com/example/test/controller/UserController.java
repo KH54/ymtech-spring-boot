@@ -2,11 +2,12 @@ package com.example.test.controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,10 @@ import com.example.test.service.user.UserServiceImpl;
  * @since 2021. 10. 12. 오후 4:33:51
  *
  */
+@Validated
 @RestController
 public class UserController {
+
     @Autowired
     private UserServiceImpl userService;
 
@@ -36,6 +39,7 @@ public class UserController {
      * @author "KyungHun Park"
      * @since 2021. 10. 13. 오후 4:51:48
      * 
+     * @param id     : 검색 조건을 위한 id
      * @param name   : 검색 조건을 위한 name
      * @param gender : 검색 조건을 위한 gender
      * @param age    : 검색 조건을 위한 age
@@ -45,9 +49,12 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ResponseEntity<Object> getUsers(@RequestParam(value = "id", required = false) String id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "gender", required = false) String gender,
+    public ResponseEntity<Object> getUsers(
+            @RequestParam(value = "id", required = false) @Size(min = 1, max = 8) String id, 
+            @RequestParam(value = "name", required = false) @Size(min = 1, max = 8) String name,
+            @RequestParam(value = "gender", required = false) @Size(min = 1, max = 8) String gender, 
             @RequestParam(value = "age", defaultValue = "0", required = false) int age) {
-        
+
         return new ResponseEntity<>(userService.getUsers(id, name, gender, age), HttpStatus.OK);
     }
 
@@ -65,8 +72,8 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getUser(@NotBlank @PathVariable("user-id") String id) {
-        
+    public ResponseEntity<Object> getUser(@PathVariable("user-id") @NotBlank @Size(min = 1, max = 8) String id) {
+
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
@@ -101,7 +108,9 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.PATCH)
-    public ResponseEntity<Object> updateUser(@PathVariable("user-id") @NotNull String id, @RequestBody User user) {
+    public ResponseEntity<Object> updateUser(
+            @PathVariable("user-id") @NotBlank String id, 
+            @RequestBody @Valid User user) {
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
     }
 
@@ -118,7 +127,7 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteUser(@Valid @PathVariable("user-id") String id) {
+    public ResponseEntity<Object> deleteUser(@PathVariable("user-id") @NotBlank @Size(min = 1, max = 8) String id) {
 
         return new ResponseEntity<Object>(userService.deleteUser(id), HttpStatus.OK);
     }

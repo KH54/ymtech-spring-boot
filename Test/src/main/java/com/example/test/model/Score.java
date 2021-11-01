@@ -1,7 +1,6 @@
 package com.example.test.model;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
@@ -18,26 +17,26 @@ import org.springframework.validation.annotation.Validated;
  *
  */
 @Validated
-public class Score extends User{
-    // 유저 ID -- PK
-    @NotBlank(message = "plz correct id(Nonblank, NonEmpty")
+public class Score extends User {
+
+    private String uuid;
+    
+    // 유저 ID -- FK
+    @NotBlank(message = "userId miss : plz correct id(Nonblank, NonEmpty)")
+    @Size(min = 1, max = 8)
     private String userId;
+
     // 유저 국어, 수학, 영어, 과학, 평균 점수 양수와 최대 3의 길이까지가능(100점)
-    @Positive(message = "plz insert positive score")
-    @Size(max = 3, message = "plz correct score")
-    private int korean= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int math= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int english= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int science= -1;
-    @Positive(message = "plz insert positive number")
-    @Size(max = 3, message = "plz correct score")
-    private int average= -1;
+    @Size(min = -1, max = 100, message = "korean miss : plz corrcet score( 0 ~ 100 )")
+    private int korean = -1;
+    @Size(min = -1, max = 100, message = "math miss : plz corrcet score( 0 ~ 100 )")
+    private int math = -1;
+    @Size(min = -1, max = 100, message = "english miss : plz corrcet score( 0 ~ 100 )")
+    private int english = -1;
+    @Size(min = -1, max = 100, message = "science miss : plz corrcet score( 0 ~ 100 )")
+    private int science = -1;
+    @Size(min = -1, max = 100, message = "average miss : plz corrcet score( 0 ~ 100 )")
+    private int average = -1;
 
     // 기본 생성자
     public Score() {
@@ -60,9 +59,33 @@ public class Score extends User{
      * Score.java
      *
      * @author "KyungHun Park"
-     * @since 2021. 10. 26. 오후 9:02:06
+     * @since 2021. 10. 28. 오후 1:05:44
      *
      * @return 
+     */
+    public String getUuid() {
+        return uuid;
+    }
+
+    /**
+     * uuid 을(를) 지정합니다.
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 10. 28. 오후 1:05:44
+     *
+     * @param uuid
+     */
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    /**
+     * Score.java
+     *
+     * @author "KyungHun Park"
+     * @since 2021. 10. 26. 오후 9:02:06
+     *
+     * @return
      */
     public String getUserId() {
         return userId;

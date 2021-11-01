@@ -19,10 +19,6 @@ public class ReadUserRes{
 
     }
     
-    public ReadUserRes(ReadUserReq req) {
-        this.read = req.getUser();
-    }
-
     /**
      * ReadUserRes.java
      *

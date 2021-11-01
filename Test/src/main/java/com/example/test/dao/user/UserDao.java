@@ -83,8 +83,8 @@ public class UserDao implements IUserDao {
         }
 
         // Query 수정
-        query = sb != null ? query.replace("{where_clause}", sb.toString()) : query;
-        // 쿼리를 실행하고 RowMapper를 이용해서 ResultSet 결과를 User 객체로 변환
+        query = sb != null ? query.replace("{where_clause}", sb.toString()) : query;         
+        // 쿼리를 실행하고 RowM    apper를 이용해서 ResultSet 결과를 User 객체로 변환
         return jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(User.class), params.toArray());
     }
 
@@ -99,7 +99,6 @@ public class UserDao implements IUserDao {
 
             return user;
         } catch (IncorrectResultSizeDataAccessException e) {
-            // 결과 값이 0개이거나 2개 이상인 경우
         }
         return null;
     }

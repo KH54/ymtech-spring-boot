@@ -38,20 +38,44 @@ public class UserServiceImpl implements IUserService {
     // UserDao 의존성 주입
     @Autowired
     UserDao userDao;
+    // ScoreDao 의존성 주입
     @Autowired
     ScoreDao scoreDao;
 
+    /**
+     * @see com.example.test.service.user.impl.IUserService#createScore(com.example.test.model.Score)
+     */
     @Override
     public CreateScoreRes createScore(Score score) {
-        ReadUserReq readUserReq = new ReadUserReq(score);
-        ReadScoreReq readScoreReq = new ReadScoreReq(score.getId());
-        
-        CreateScoreRes res = new CreateScoreRes();
-        CreateScoreReq req = new CreateScoreReq(score);
+        // Score로 받은 유저의 정보를 User 객체에 저장
+        User user = new User(score);
 
+        // ID 존재를 확인하기 위한 GET에 보낼 Request
+        ReadUserReq readUserReq = new ReadUserReq(score.getId());
+        
+        // 유저의 생성이 올바르게 되었는지 확인 하기 위해 GET에 보낼 Request
+        ReadScoreReq readScoreReq = new ReadScoreReq(score.getId());
+
+        // 생성된 정보를 반환하기 위한 Response
+        CreateScoreRes res = new CreateScoreRes();
+        
+        // 생성할 정보를 DAO로 전송할 Request
+        CreateScoreReq scoreReq = new CreateScoreReq(score);
+        
+        // User가 존재하지 않는 경우
+        CreateUserReq userReq = new CreateUserReq(user);
+
+        // user가 존재하지 않는 경우
         if (userDao.getUser(readUserReq) != null) {
-            userDao.createScore(req);
+            // Score만 생성
+            userDao.createScore(scoreReq);
+        } else {
+            // user가 존재하는 경우
+            userDao.createUser(userReq);
+            userDao.createScore(scoreReq);
         }
+
+        // 생성한 정보를 Response에 저장
         res.setCreate(scoreDao.getScore(readScoreReq));
 
         return res;
@@ -81,8 +105,9 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> getUsers(String id, String name, String gender, int age) {
-        // 전달받은 parameter를 Dao로 전달한 결과를 list에 저장
+        // 전달받은 파라미터를 DAO에 보내기 위해 Request로 변환
         ReadUserReq req = new ReadUserReq(id, name, gender, age);
+        // GET의 결과를 list에 저장
         List<User> list = userDao.getUsers(req);
 
         // 출력할 User가 없는 경우
@@ -100,11 +125,12 @@ public class UserServiceImpl implements IUserService {
     public ReadUserRes getUser(String id) {
         // 사용자의 요청에 대한 응답을 담기 위한 객체
         ReadUserRes res = new ReadUserRes();
+        // DAO로 전달하기 위해 Request로 변환
         ReadUserReq req = new ReadUserReq(id);
 
+        // GET 결과를 user객체로 저장
         ControllerUser user = new ControllerUser(userDao.getUser(req));
 
-        // id를 Dao로 전달한 결과를 set
         res.setRead(user);
 
         return res;
@@ -115,14 +141,17 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public UpdateUserRes updateUser(String id, User user) {
+        // 입력 받은 id를 user에 저장
+        user.setId(id);
+        
         // 사용자의 요청에 대한 응답을 담기 위한 객체
         UpdateUserRes res = new UpdateUserRes();
-        user.setId(id);
+        // 사용자의 요청을 DAO로 전달하기 위해 Request로 변환 
         UpdateUserReq req = new UpdateUserReq(user);
+        // 사용자의 요청이 옳은 요청인지 확인하기 위해 Request로 변환
         ReadUserReq readReq = new ReadUserReq(user);
 
-        // 변경하기 전의 User 객체 저장
-
+        // 변경하기전의 정보 저장
         res.setBefore(userDao.getUser(readReq));
 
         // 변경할 값을 입력 받지 않았다면 Score의 이전 정보를 그대로 저장
@@ -133,12 +162,13 @@ public class UserServiceImpl implements IUserService {
 
         // 변경될 회원정보에 id 저장
         req.setUpdate(user);
-        // 업데이트된 내용을 set
 
         // 변경된 객체를 Dao로 전달
-        userDao.updateUser(req);
+        if (userDao.updateUser(req) > 0) {
+            // 업데이트 성공할 시
+            res.setAfter(user);
+        }
 
-        res.setAfter(user);
         return res;
     }
 
@@ -149,14 +179,14 @@ public class UserServiceImpl implements IUserService {
     public DeleteUserRes deleteUser(String id) {
         // 사용자의 요청에 대한 응답을 담기 위한 객체
         DeleteUserRes res = new DeleteUserRes();
+        // 사용자의 요청을 DAO로 전달하기 위해 Request로 변환
         ReadUserReq req = new ReadUserReq(id);
 
-        // user의 정보를 set
-        res.setDelete(userDao.getUser(req));
-
         // user 정보 삭제
-        userDao.deleteUser(id);
-
+        if (userDao.deleteUser(id) > 0) {
+            // user의 정보를 set
+            res.setDelete(userDao.getUser(req));
+        }
         return res;
     }
 

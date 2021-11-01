@@ -3,6 +3,15 @@ package com.example.test.controller.model.user.req;
 import com.example.test.model.Score;
 import com.example.test.model.User;
 
+/**
+ * 사용자의 GET 요청 내용을 담기 위한 Request 
+ *
+ * @author "KyungHun Park"
+ * @since 2021. 11. 1. 오후 1:38:35
+ *
+ * @modified 2021. 11. 1. 오후 1:38:35 || Kyunghun Park || 최초 생성
+ *
+ */
 public class ReadUserReq {
 
     private String id;
@@ -43,7 +52,7 @@ public class ReadUserReq {
     }
 
     /**
-     * ReadUserReq.java
+     * id를 호출합니다.
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 25. 오후 5:42:54
@@ -67,7 +76,7 @@ public class ReadUserReq {
     }
 
     /**
-     * ReadUserReq.java
+     * name을 호출합니다.
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 25. 오후 5:42:54

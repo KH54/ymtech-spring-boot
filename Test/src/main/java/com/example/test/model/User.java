@@ -1,5 +1,6 @@
 package com.example.test.model;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -20,21 +21,22 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class User {
     // 유저 ID -- PK
-    @NotBlank(message = "plz correct id(Nonblank, NonEmpty)")
-    @Size(max = 8)
+    @NotBlank(message = "id miss : plz correct id(Nonblank, NonEmpty, min = 1, max = 8)")
+    @Size(min = 1, max = 8)
     private String id;
 
     // 유저 비밀번호, 이름, 성별, 나이
-    @NotBlank(message = "plz correct password(Nonblank, NonEmpty)")
-    @Size(max = 16)
+    @NotBlank(message = "pwd miss : plz correct password(Nonblank, NonEmpty, min = 1, max = 16)")
+    @Size(min = 1, max = 16)
     private String pwd;
-    @NotBlank(message = "plz correct password(Nonblank, NonEmpty)")
-    @Size(max = 8)
+    @NotBlank(message = "name miss : plz correct name(Nonblank, NonEmpty, min = 1, max = 8)")
+    @Size(min = 1, max = 8)
     private String name;
-    @NotBlank(message = "plz correct password(Nonblank, NonEmpty)")
-    @Size(max = 8)
+    @NotBlank(message = "gender miss : correct gender(Nonblank, NonEmpty, min = 1, max = 8)")
+    @Size(min = 1, max = 8)
     private String gender;
-    @Positive(message = "plz positive age")
+    @Positive(message = "age miss : plz correcet age(min = 1)")
+    @Min(1)
     private int age;
 
     // 기본 생성자
@@ -49,6 +51,14 @@ public class User {
         this.name = name;
         this.gender = gender;
         this.age = age;
+    }
+
+    public User(Score score) {
+        this.id = score.getId();
+        this.pwd = score.getPwd();
+        this.name = score.getPwd();
+        this.gender = score.getGender();
+        this.age = score.getAge();
     }
 
     /**

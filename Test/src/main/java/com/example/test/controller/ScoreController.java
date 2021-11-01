@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.test.model.Score;
 import com.example.test.service.score.ScoreServiceImpl;
-
 @RestController
 public class ScoreController {
 
     @Autowired
-    ScoreServiceImpl scoreService;
+    private ScoreServiceImpl scoreService;
+    
 
     /**
      * 모든 User와 Score의 정보를 GET하는 컨트롤러 메소드
@@ -49,7 +49,6 @@ public class ScoreController {
     @RequestMapping(value = "/users/score/{user-id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getScore(@PathVariable("user-id") String id) {
         return new ResponseEntity<>(scoreService.getScore(id), HttpStatus.OK);
-
     }
 
     /**

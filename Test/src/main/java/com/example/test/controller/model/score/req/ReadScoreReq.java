@@ -3,7 +3,7 @@ package com.example.test.controller.model.score.req;
 import com.example.test.controller.model.score.ControllerScore;
 import com.example.test.model.Score;
 
-public class ReadScoreReq {
+public class ReadScoreReq extends ControllerScore {
     private ControllerScore read;
     private String id;
     private int korean;
@@ -17,11 +17,16 @@ public class ReadScoreReq {
     }
 
     public ReadScoreReq(Score score) {
+        this.id = score.getId();
         this.korean = score.getKorean();
         this.math = score.getMath();
         this.english = score.getEnglish();
         this.science = score.getScience();
         this.average = score.getAverage();
+        this.setPwd(score.getId());
+        this.setName(score.getId());
+        this.setGender(score.getGender());
+        this.setAge(score.getAge());
     }
     
     public ReadScoreReq(String id) {

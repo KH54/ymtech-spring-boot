@@ -38,11 +38,11 @@ public class ScoreDao implements IScoreDao {
         try {
             // Query를 실행하고 RowMapper를 사용하여 결과를 Score 객체로 변환
             Score score = jdbcTemplate.queryForObject(Query.SQL_SCORE_SELECT, BeanPropertyRowMapper.newInstance(Score.class), req.getId());
-            score.setId(req.getId());
             return score;
         } catch (IncorrectResultSizeDataAccessException e) {
-            // 결과 값이 0개이거나 2개 이상인 경우
+            
         }
+        // query 실행 실패시 null
         return null;
     }
 

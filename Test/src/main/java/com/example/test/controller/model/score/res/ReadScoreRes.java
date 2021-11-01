@@ -26,12 +26,12 @@ public class ReadScoreRes {
     }
 
     /**
-     * ReadScoreRes.java
+     * read를 호출합니다.
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 3:29:08
      *
-     * @return 
+     * @return ControllerScore 객체
      */
     public ControllerScore getRead() {
         return read;

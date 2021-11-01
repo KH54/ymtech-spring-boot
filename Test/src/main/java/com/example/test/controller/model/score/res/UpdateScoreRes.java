@@ -15,22 +15,24 @@ import com.example.test.model.Score;
 public class UpdateScoreRes {
     private ControllerScore before;
     private ControllerScore after;
-    
+
     // 기본 생성자
     public UpdateScoreRes() {
-        
+
     }
+
     /**
      * UpdateScoreRes.java
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 4:39:21
      *
-     * @return 
+     * @return
      */
     public ControllerScore getBefore() {
         return before;
     }
+
     /**
      * before 을(를) 지정합니다.
      *
@@ -42,21 +44,24 @@ public class UpdateScoreRes {
     public void setBefore(ControllerScore before) {
         this.before = before;
     }
+
     /**
      * UpdateScoreRes.java
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 4:39:21
      *
-     * @return 
+     * @return
      */
-    
+
     public void setBefore(Score score) {
         this.before = new ControllerScore(score);
     }
+
     public ControllerScore getAfter() {
         return after;
     }
+
     /**
      * after 을(를) 지정합니다.
      *
@@ -68,8 +73,9 @@ public class UpdateScoreRes {
     public void setAfter(ControllerScore after) {
         this.after = after;
     }
+
     public void setAfter(Score after) {
         this.after = new ControllerScore(after);
     }
-    
+
 }

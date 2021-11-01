@@ -15,15 +15,13 @@ public class Query {
     public static final String SQL_USER_DELETE = "DELETE FROM user WHERE id = ?";
     public static final String SQL_USER_UPDATE = "UPDATE user SET pwd = ?, name = ?, gender = ?, age = ? WHERE id = ?";
     public static final String SQL_USER_SELECT = "SELECT * FROM user";
-    public static final String SQL_USER_SELECT_ID = "SELECT * FROM  user WHERE id = ?";
-    public static final String SQL_USER_SELECT_PW = "SELECT pwd FROM user WHERE id = ?";
-    public static final String SQL_USER_SELECT_ELE = "SELECT * FROM user WHERE 1=1 {where_clause}";
+    public static final String SQL_USER_SELECT_ID = "SELECT id,name,gender,age FROM  user WHERE id = ?";
+    public static final String SQL_USER_SELECT_ELE = "SELECT id,name,gender,age FROM user WHERE 1=1 {where_clause}";
 
     //점수 쿼리
     public static final String SQL_USER_SCORE_SELECT = "SELECT * FROM user JOIN user_score ON user.id = user_score.user_id ;";
     public static final String SQL_SCORE_UPDATE = "UPDATE user_score SET korean = ?, math = ?, english = ?, science = ?, average = ? WHERE user_id = ?";
     public static final String SQL_SCORE_DELETE = "DELETE FROM user_score WHERE user_id = ?";
     public static final String SQL_SCORE_SELECT = "SELECT * FROM user JOIN user_score ON user.id = user_score.user_id WHERE user.id= ?";
-    public static final String SQL_SCORE_INSERT = "INSERT INTO user_score(uuid, id, korean, math, english, science, average) values(?,?,?,?,?,?,?)";
-    //SELECT * FROM user JOIN user_score ON user.id = user_score.user_id WHERE user.id="119";
+    public static final String SQL_SCORE_INSERT = "INSERT INTO user_score(uuid, user_id, korean, math, english, science, average) values(?,?,?,?,?,?,?)";
 }

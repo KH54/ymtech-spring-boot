@@ -3,10 +3,9 @@ package com.example.test.controller.model.score.req;
 import java.util.UUID;
 
 import com.example.test.controller.model.score.ControllerScore;
-import com.example.test.controller.model.user.req.CreateUserReq;
 import com.example.test.model.Score;
 
-public class CreateScoreReq extends CreateUserReq {
+public class CreateScoreReq {
     private ControllerScore create;
 
     private String uuid;
@@ -24,6 +23,23 @@ public class CreateScoreReq extends CreateUserReq {
     public CreateScoreReq() {
 
     }
+    
+
+
+    public CreateScoreReq(Score score) {
+        this.uuid = UUID.randomUUID().toString();
+        this.id = score.getId();
+        this.pwd = score.getPwd();
+        this.name = score.getName();
+        this.gender = score.getGender();
+        this.age = score.getAge();
+        this.korean = score.getKorean();
+        this.math = score.getMath();
+        this.english = score.getEnglish();
+        this.science = score.getScience();
+        this.average = score.getAverage();
+    }
+    
 
     /**
      * CreateScoreReq.java
@@ -31,7 +47,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public String getUuid() {
         return uuid;
@@ -55,7 +71,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public String getId() {
         return id;
@@ -79,7 +95,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public String getPwd() {
         return pwd;
@@ -103,7 +119,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public String getName() {
         return name;
@@ -127,7 +143,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public String getGender() {
         return gender;
@@ -151,7 +167,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public int getAge() {
         return age;
@@ -175,7 +191,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public int getKorean() {
         return korean;
@@ -199,7 +215,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public int getMath() {
         return math;
@@ -223,7 +239,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public int getEnglish() {
         return english;
@@ -247,7 +263,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public int getScience() {
         return science;
@@ -271,7 +287,7 @@ public class CreateScoreReq extends CreateUserReq {
      * @author "KyungHun Park"
      * @since 2021. 10. 26. 오후 5:45:03
      *
-     * @return 
+     * @return
      */
     public int getAverage() {
         return average;
@@ -289,24 +305,6 @@ public class CreateScoreReq extends CreateUserReq {
         this.average = average;
     }
 
-    public CreateScoreReq(ControllerScore create) {
-        this.create = create;
-    }
-
-    public CreateScoreReq(Score score) {
-        this.uuid = UUID.randomUUID().toString();
-        this.id = score.getId();
-        this.pwd = score.getPwd();
-        this.name = score.getName();
-        this.gender = score.getGender();
-        this.age = score.getAge();
-        this.korean = score.getKorean();
-        this.math = score.getMath();
-        this.english = score.getEnglish();
-        this.science = score.getScience();
-        this.average = score.getAverage();
-    }
-
     /**
      * CreateScoreReq.java
      *
@@ -317,7 +315,8 @@ public class CreateScoreReq extends CreateUserReq {
      */
     public ControllerScore getCreate() {
         return create;
-    }
+    }    
+
 
     /**
      * create 을(를) 지정합니다.
