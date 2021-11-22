@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
 
-import com.example.test.controller.model.user.res.UpdateUserRes;
 import com.example.test.model.User;
 
 /**

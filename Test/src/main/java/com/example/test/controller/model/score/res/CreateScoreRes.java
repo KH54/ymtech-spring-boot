@@ -20,7 +20,7 @@ public class CreateScoreRes {
         
     }
 
-    /**
+    /*
      * create 호출
      *
      * @author "KyungHun Park"
