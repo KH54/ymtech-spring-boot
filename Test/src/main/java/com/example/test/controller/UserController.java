@@ -1,6 +1,5 @@
 package com.example.test.controller;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -110,7 +109,7 @@ public class UserController {
     @RequestMapping(value = "/users/{user-id}", method = RequestMethod.PATCH)
     public ResponseEntity<Object> updateUser(
             @PathVariable("user-id") @NotBlank String id, 
-            @RequestBody @Valid User user) {
+            @RequestBody User user) {
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
     }
 
