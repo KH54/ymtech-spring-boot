@@ -65,18 +65,18 @@ public class UserServiceImpl implements IUserService {
         // User가 존재하지 않는 경우
         CreateUserReq userReq = new CreateUserReq(user);
 
-        // user가 존재하지 않는 경우
+        // user가 존재하는 경우
         if (userDao.getUser(readUserReq) != null) {
             // Score만 생성
             userDao.createScore(scoreReq);
         } else {
-            // user가 존재하는 경우
+            // user가 존재하지 않는 경우
             userDao.createUser(userReq);
             userDao.createScore(scoreReq);
         }
 
         // 생성한 정보를 Response에 저장
-        res.setCreate(scoreDao.getScore(readScoreReq));
+        //res.setCreate(scoreDao.getScore(readScoreReq));
 
         return res;
     }
@@ -183,10 +183,8 @@ public class UserServiceImpl implements IUserService {
         ReadUserReq req = new ReadUserReq(id);
 
         // user 정보 삭제
-        if (userDao.deleteUser(id) > 0) {
-            // user의 정보를 set
-            res.setDelete(userDao.getUser(req));
-        }
+        userDao.deleteUser(id);
+        
         return res;
     }
 
