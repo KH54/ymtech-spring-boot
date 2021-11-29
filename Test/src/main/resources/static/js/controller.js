@@ -1,41 +1,117 @@
-var app = angular.module("app", []);
+var app = angular.module('app', ['ngResource']);
 
-app.controller("controller", function ($scope, $http) {
+app.controller('UserController', function($scope, $resource) {
 
-    $scope.Users = [];
-    $scope.User = {
-        id: "",
-        pwd: "",
-        name: "",
-        gender: "",
-        age: ""
-    };
+	let res = $resource(
+		"/users/:val",
+		null,
+		{
+			getUser: {
+				method: 'GET',
+				params: { val: "" }
+			},
 
-    refreshUser();
+			createUser: {
+				method: 'POST'
+			},
 
-    $scope.submitUser = function () {
-        var method = "POST";
-        var url = "users";
+			updateUser: {
+				method: 'PATCH',
+				params: { val: "" }
+			},
+
+			delete: {
+				method: 'DELETE',
+				params: { val: "" }
+			}
+		}
+	);
 
 
-        $http({
-            method: method,
-            url: url,
-            data: angular.toJson($scope.User),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(_success, _error);
-    };
 
-    $scope.createUser = function () {
-        clearForm();
-    }
+	getUsers = function() {
+		res.query().$promise.then(function(users) {
+			$scope.users = users;
+		});
+	};
+	getUsers();
 
-    $scope.deleteUser = function (User) {
-        $http({
-            method: 'DELETE',
-            url: '/user' + User.id
-        }).then(_success, _error);
-    }
+
+	$scope.getUser = function(id) {
+		res.getUser(
+			{ val: id }
+			, null
+			, function(users) {
+				$scope.users = users;
+			}
+			, function() {
+				getUsers();
+				alert("존재하지 않습니다.");
+			}
+		)
+	};
+
+	$scope.deleteUser1 = function(id) {
+		res.delete(
+			{ val: id }
+			, null
+			, function() {
+				getUsers();
+			}
+		)
+	};
+
+	$scope.createUser = function(id, pwd, name, gender, age) {
+		res.createUser(
+			{}
+			, {
+				id: id,
+				pwd: pwd,
+				name: name,
+				gender: gender,
+				age: age
+			}
+			, function() {
+				getUsers();
+			}
+			, function() {
+				alert("올바르게 입력해주세요");
+			}
+		)
+	};
+
+	$scope.updateUser = function(user, id, pwd, name, gender, age) {
+
+		res.updateUser(
+			{ val: id }
+			, {
+				pwd: pwd,
+				name: name,
+				gender: gender,
+				age: age
+			}
+			, function() {
+				getUsers();
+				click(user);
+			}
+			, function() {
+				alert("올바른 ID를 입력해주세요");
+			}
+		)
+	};
+
+	$scope.click = function(user) {
+		user.show = !user.show;
+	}
+
+	$scope.reset = function(info) {
+		getUsers();
+		info.id = "";
+		info.pwd = "";
+		info.name = "";
+		info.gender = "";
+		info.age = "";
+
+	}
+
 });
