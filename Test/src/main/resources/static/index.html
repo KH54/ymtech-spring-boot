@@ -1,72 +1,107 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Isadasd</title>
-    <script src="/js/angular.js"></script>
-    <script src="/js/controller.js"></script>
-
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="/js/css.css" type="text/css" rel="stylesheet">
+<script src="/js/angular.js"></script>
+<script src="/js/resource.js"></script>
+<script src="/js/controller.js"></script>
 </head>
 
-<body ng-app="app" ng-controller="controller">
+<body>
+	<div class="inputForm" ng-app="app" ng-controller="UserController">
+		<div>
+			<form class="inputForm" ng-model="info">
+				<table id="inputTable">
+					<tr>
+						<td>
+							<input type="text" name="id" ng-model="info.id" placeholder="ID" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="pwd" ng-model="info.pwd" placeholder="Password" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="name" ng-model="info.name" placeholder="Name" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="gender" ng-model="info.gender" placeholder="Gender" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="age" ng-model="info.age" placeholder="Age" />
+						</td>
+					</tr>
+				</table>
 
-    <h3>CRUD Test</h3>
+				<input type="hidden" ng-model="newUserInfo.id" />
+				<br>
+				<div>
+					<input type="button" value="검색" ng-click="getUser(info.id)" />
+					<input type="button" value="저장" ng-click="createUser(info.id, info.pwd, info.name, info.gender, info.age)" />
+					<input type="button" value="초기화" ng-click="reset(info)" />
+				</div>
+				<br>
+			</form>
+		</div>
+		<table id="resultTable" border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Password</th>
+					<th>Name</th>
+					<th>Gender</th>
+					<th>Age</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="userInfo in users">
+					<td>
+						<span ng-bind="userInfo.id"></span>
+						<!-- <input type="text" ng-model="userInfo.newUserInfo.id" ng-if="userInfo.show" placeholder=""> -->
+					</td>
+					<td>
+						<span ng-bind="userInfo.pwd" ng-if="!userInfo.show"></span>
+						<input type="text" ng-model="userInfo.newUserInfo.pwd" ng-if="userInfo.show">
+					</td>
+					<td>
+						<span ng-bind="userInfo.name" ng-if="!userInfo.show"></span>
+						<input type="text ng-model=" ng-model="userInfo.newUserInfo.name" ng-if="userInfo.show">
+					</td>
+					<td>
+						<span ng-bind="userInfo.gender" ng-if="!userInfo.show"></span>
+						<input type="text" ng-model="userInfo.newUserInfo.gender" ng-if="userInfo.show">
+					</td>
+					<td>
+						<span ng-bind="userInfo.age" ng-if="!userInfo.show"></span>
+						<input type="text" ng-model="userInfo.newUserInfo.age" ng-if="userInfo.show">
+					</td>
+					<td>
+						<input type="button" ng-if="!userInfo.show" ng-click="click(userInfo)" value="수정">
+						<input type="button" ng-if="userInfo.show"
+							ng-click="updateUser(userInfo, userInfo.id, userInfo.newUserInfo.pwd, userInfo.newUserInfo.name, userInfo.newUserInfo.gender, userInfo.newUserInfo.age)"
+							value="저장"
+						>
 
-    <form ng-submit="submitUser()">
-        <table border="0">
-            <tr>
-                <td>User ID</td>
-                <td><input type="text" ng-model="User.id"></td>
-            </tr>
-            <tr>
-                <td>User Password</td>
-                <td><input type="text" ng-model="User.pwd" /> </td>
-            </tr>
-            <tr>
-                <td>User Name</td>
-                <td><input type="text" ng-model="user.name"></td>
-            </tr>
-            <tr>
-                <td>User Gender</td>
-                <td><input type="text" ng-model="user.gender"> </td>
-            </tr>
-            <tr>
-                <td>User Age</td>
-                <td><input type="text" ng-model="user.age"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="완료">
-                </td>
-            </tr>
-        </table>
-    </form>
-    <br>
+						<input type="button" ng-if="!userInfo.show" ng-click="deleteUser1(userInfo.id)" value="삭제">
+						<input type="button" ng-if="userInfo.show" ng-click="click(userInfo)" value="뒤로가기">
 
-    <a class="create-button" ng-click="createUser()">유저 생성</a>
-    <table border="1">
-        <tr>
-            <th>User ID</th>
-            <th>User Password</th>
-            <th>User Name</th>
-            <th>User Gender</th>
-            <th>User Age</th>
-        </tr>
-        <tr ng-repeat="user in users">
-            <td>{{User.id}}</td>
-            <td>{{User.pwd}}</td>
-            <td>{{User.name}}</td>
-            <td>{{User.gender}}</td>
-            <td>{{User.age}}</td>
-            <td>
-                <a ng-click="updateUser(User)" class="update-button">Update</a>
-            </td>
-            <td>
-                <a ng-click="deleteUser(User)" class="delete-button">Delete</a>
-            </td>
-        </tr>
-    </table>
+					</td>
+				</tr>
+			</tbody>
+
+
+		</table>
+	</div>
 </body>
-
 </html>
