@@ -1,5 +1,4 @@
-# ymtech-spring-boot
- Spring Boot
+#  Spring Boot 교육 및 학습 프로젝트
  
 RESTful API<br>
 CRUD <br>
