@@ -15,7 +15,7 @@ public class Query {
     public static final String SQL_USER_DELETE = "DELETE FROM user WHERE id = ?";
     public static final String SQL_USER_UPDATE = "UPDATE user SET pwd = ?, name = ?, gender = ?, age = ? WHERE id = ?";
     public static final String SQL_USER_SELECT = "SELECT * FROM user";
-    public static final String SQL_USER_SELECT_ID = "SELECT id,name,gender,age FROM  user WHERE id = ?";
+    public static final String SQL_USER_SELECT_ID = "SELECT id,name,gender,age FROM  user WHERE id =?";
     public static final String SQL_USER_SELECT_ELE = "SELECT id,name,gender,age FROM user WHERE 1=1 {where_clause}";
 
     //점수 쿼리

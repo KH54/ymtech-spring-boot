@@ -17,9 +17,10 @@ body {
 }
 
 #inputTable tr {
+	
 }
 
-#inputTable input[type=text] {
+#inputTable input[type=text], input[type=number], input[type=password] {
 	height: 25px;
 	text-align: center;
 	width: 200px;

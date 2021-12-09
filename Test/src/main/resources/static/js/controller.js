@@ -39,7 +39,10 @@ app.controller('UserController', function($scope, $resource) {
 
 	$scope.getUser = function(id) {
 		res.getUser(
-			{ val: id }
+			{ val: id,
+			"name":"",
+			"id":""
+			 }
 			, null
 			, function(users) {
 				$scope.users = users;
@@ -102,7 +105,8 @@ app.controller('UserController', function($scope, $resource) {
 
 	$scope.click = function(user) {
 		user.show = !user.show;
-	}
+		user.newUserInfo = angular.copy(user);
+	};
 
 	$scope.reset = function(info) {
 		getUsers();

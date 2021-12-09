@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<link href="/js/css.css" type="text/css" rel="stylesheet">
-<script src="/js/angular.js"></script>
-<script src="/js/resource.js"></script>
-<script src="/js/controller.js"></script>
+
+
+<link href="../static/js/css.css" type="text/css" rel="stylesheet">
+<script th:src="@{/static/js/angular.js}"></script>
+<script th:src="@{/static/js/resource.js}"></script>
+<script th:src="@{/static/js/controller.js}"></script>
 </head>
 
 <body>
+<h1 th:text="${test}"></h1>
 	<div class="inputForm" ng-app="app" ng-controller="UserController">
 		<div>
+		
 			<form class="inputForm" ng-model="info">
 				<table id="inputTable">
 					<tr>
@@ -23,7 +27,7 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="pwd" ng-model="info.pwd" placeholder="Password" />
+							<input type="password" name="pwd" ng-model="info.pwd" placeholder="Password" />
 						</td>
 					</tr>
 					<tr>
@@ -38,7 +42,7 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="age" ng-model="info.age" placeholder="Age" />
+							<input type="number" name="age" ng-model="info.age" placeholder="Age" />
 						</td>
 					</tr>
 				</table>
@@ -98,8 +102,11 @@
 
 					</td>
 				</tr>
-			</tbody>
+				<tr ng-if="users == null || users.length == 0">
+					<td colspan="6">no data</td>
+				</tr>
 
+			</tbody>
 
 		</table>
 	</div>

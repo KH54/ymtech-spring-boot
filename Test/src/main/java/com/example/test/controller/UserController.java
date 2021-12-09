@@ -62,6 +62,7 @@ public class UserController {
      *
      * @author "KyungHun Park"
      * @since 2021. 10. 13. 오후 4:52:39
+     * 
      *
      * @param id : GET할 User의 id
      * @return 조회할 User를 JSON 형식으로 출력, 상태 코드 출력
@@ -80,7 +81,7 @@ public class UserController {
      * User 객체의 정보(id,pwd,name)를 입력받아 POST하는 메소드
      *
      * @author "KyungHun Park"
-     * @since 2021. 10. 13. 오후 4:53:20
+     * @since 2021. 10  . 13. 오후 4:53:20
      *
      * @param user : POST할 값을 가진 객체
      * @return : POST한 User를 JSON 형식으로 출력, 상태 코드 출력

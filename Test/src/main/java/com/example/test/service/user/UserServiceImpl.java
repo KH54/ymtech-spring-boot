@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.test.controller.model.score.req.CreateScoreReq;
-import com.example.test.controller.model.score.req.ReadScoreReq;
 import com.example.test.controller.model.score.res.CreateScoreRes;
 import com.example.test.controller.model.user.ControllerUser;
 import com.example.test.controller.model.user.req.CreateUserReq;
@@ -53,8 +52,6 @@ public class UserServiceImpl implements IUserService {
         // ID 존재를 확인하기 위한 GET에 보낼 Request
         ReadUserReq readUserReq = new ReadUserReq(score.getId());
         
-        // 유저의 생성이 올바르게 되었는지 확인 하기 위해 GET에 보낼 Request
-        ReadScoreReq readScoreReq = new ReadScoreReq(score.getId());
 
         // 생성된 정보를 반환하기 위한 Response
         CreateScoreRes res = new CreateScoreRes();
@@ -180,7 +177,6 @@ public class UserServiceImpl implements IUserService {
         // 사용자의 요청에 대한 응답을 담기 위한 객체
         DeleteUserRes res = new DeleteUserRes();
         // 사용자의 요청을 DAO로 전달하기 위해 Request로 변환
-        ReadUserReq req = new ReadUserReq(id);
 
         // user 정보 삭제
         userDao.deleteUser(id);

@@ -64,8 +64,8 @@ public class UserDao implements IUserDao {
 
         // parameter의 값이 존재하는 경우 쿼리문에 추가
         if (req.getId() != null) {
-            params.add(req.getId());
-            sb.append("AND id=? ");
+            params.add("%"+req.getId()+"%");
+            sb.append("AND id LIKE ?");
         }
         if (req.getName() != null) {
             params.add(req.getName());
