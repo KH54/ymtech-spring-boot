@@ -6,11 +6,6 @@ spring:
     password: eownddlf1704!
   mvc:
     static-path-pattern: /static/**
-    
-  security:
-    user:
-      name: user
-      password: 1234
       
   thymeleaf:    cache: false
   

@@ -39,9 +39,10 @@ app.controller('UserController', function($scope, $resource) {
 
 	$scope.getUser = function(id) {
 		res.getUser(
-			{ val: id,
-			"name":"",
-			"id":""
+			{ 
+				val: id,
+				"name":"",
+				"id":""
 			 }
 			, null
 			, function(users) {

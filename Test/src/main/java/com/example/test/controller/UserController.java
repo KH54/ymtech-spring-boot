@@ -83,7 +83,7 @@ public class UserController {
      * @author "KyungHun Park"
      * @since 2021. 10  . 13. 오후 4:53:20
      *
-     * @param user : POST할 값을 가진 객체
+     * @param score : POST할 값을 가진 객체
      * @return : POST한 User를 JSON 형식으로 출력, 상태 코드 출력
      *
      * @modified 2021. 10. 13. Kyunghun Park 최초 생성
